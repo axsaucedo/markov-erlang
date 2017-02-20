@@ -158,15 +158,17 @@ register_word(Word) ->
 
 -spec add_word_to_list([string()], string()) -> [string()].
 add_word_to_list(_Words, _Word) ->
-    undefined.
+    [Word | Words].
 
 -spec pick_next_word([string(),...]) -> string().
 pick_next_word(_Words) ->
-    undefined.
+    pick_random(Words).
 
 -spec pick_random([string(), ...]) -> string().
 pick_random(_List) ->
-    undefined.
+    Length = length(List),
+    Index = random:uniform(Length),
+    lists:nth(Index, List).
 
 -spec get_registered_name_for_word(string()) -> atom().
 get_registered_name_for_word(Word) ->

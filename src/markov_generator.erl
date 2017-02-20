@@ -155,11 +155,14 @@ code_change(_OldVsn, State, _Extra) ->
 
 -spec tokenize(string()) -> [string(), ...].
 tokenize(_Text) ->
-    undefined.
+    string:tokens(Text, " \t\n").
 
 -spec load_words(nonempty_string(), [nonempty_string(), ...]) -> ok.
 load_words(_Word, []) ->
-    undefined.
+    ok;
+load_words(Word, [Following | Words]) ->
+    markov_word:add_following_word(Word, Following),
+    load_words(Following, Words).
 
 -spec generate(fun((string()) -> string()), non_neg_integer(), [string()]) -> string().
 generate(_NextWord, 1, Words) ->
